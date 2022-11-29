@@ -1,0 +1,50 @@
+.root {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.inputContainer {
+  margin-bottom: 24px;
+  width: 300px;
+
+  input {
+    width: inherit;
+    border: none;
+    outline: none;
+    background: rgb(240, 240, 240);
+    padding: 10px;
+    border-radius: 4px;
+  }
+}
+
+.signUpButton {
+  width: 300px;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background: black;
+  color: white;
+  cursor: pointer;
+  margin-bottom: 24px;
+  transition: 0.2s all ease-in-out;
+
+  &:hover {
+    background: lighten(black, 20%);
+  }
+}
+
+.navigation {
+  text-align: center;
+
+  span {
+    color: blue;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+      color: lighten(blue, 10%);
+    }
+  }
+}

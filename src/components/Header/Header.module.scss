@@ -15,14 +15,13 @@
   }
 }
 
-.signInButton {
+.actionButton {
   border: none;
   background: black;
   color: white;
   padding: 10px 24px;
   border-radius: 4px;
   cursor: pointer;
-  font-weight: 600;
   transition: 0.2s all ease-in-out;
 
   &:hover {
@@ -41,6 +40,7 @@
   padding: 2px 14px;
   border-radius: 8px;
   transition: 0.2s all ease-in-out;
+  margin-right: 8px;
 
   &:hover {
     background: white;
