@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { UserSliceState } from '../../types/user';
+import { User, UserSliceState } from '../../types/user';
 
 const initialState: UserSliceState = {
   fullName: '',
@@ -7,6 +7,7 @@ const initialState: UserSliceState = {
   password: '',
   isLoggedIn: false,
   isLoading: false,
+  user: {} as User,
 };
 
 const userSlice = createSlice({
@@ -28,10 +29,13 @@ const userSlice = createSlice({
     setIsLoading(state, action: PayloadAction<boolean>) {
       state.isLoading = action.payload;
     },
+    setUser(state, action: PayloadAction<User>) {
+      state.user = action.payload;
+    },
   },
 });
 
-export const { setFullname, setEmail, setPassword, setIsLoggedIn, setIsLoading } =
+export const { setFullname, setEmail, setPassword, setIsLoggedIn, setIsLoading, setUser } =
   userSlice.actions;
 
 export default userSlice.reducer;
