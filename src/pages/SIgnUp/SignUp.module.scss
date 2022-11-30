@@ -33,6 +33,11 @@
   &:hover {
     background: lighten(black, 20%);
   }
+
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
 }
 
 .navigation {

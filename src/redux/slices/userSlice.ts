@@ -6,6 +6,7 @@ const initialState: UserSliceState = {
   email: '',
   password: '',
   isLoggedIn: false,
+  isLoading: false,
 };
 
 const userSlice = createSlice({
@@ -24,9 +25,13 @@ const userSlice = createSlice({
     setIsLoggedIn(state, action: PayloadAction<boolean>) {
       state.isLoggedIn = action.payload;
     },
+    setIsLoading(state, action: PayloadAction<boolean>) {
+      state.isLoading = action.payload;
+    },
   },
 });
 
-export const { setFullname, setEmail, setPassword, setIsLoggedIn } = userSlice.actions;
+export const { setFullname, setEmail, setPassword, setIsLoggedIn, setIsLoading } =
+  userSlice.actions;
 
 export default userSlice.reducer;

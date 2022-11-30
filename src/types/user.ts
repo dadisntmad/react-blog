@@ -3,4 +3,5 @@ export type UserSliceState = {
   email: string;
   password: string;
   isLoggedIn: boolean;
+  isLoading: boolean;
 };
