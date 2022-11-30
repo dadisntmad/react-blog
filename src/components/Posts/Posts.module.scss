@@ -27,7 +27,7 @@
 
 .footer {
   width: 500px;
-  height: 120px;
+  height: 130px;
   background: white;
   padding: 12px;
   border-bottom-left-radius: 8px;
@@ -49,5 +49,27 @@
     text-overflow: ellipsis;
     color: black;
     font-weight: 500;
+  }
+}
+
+.date {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  p {
+    color: grey;
+    font-size: 12px;
+    font-weight: 500;
+  }
+}
+
+.views {
+  display: flex;
+  align-items: center;
+
+  span {
+    margin-right: 5px;
+    color: grey;
   }
 }

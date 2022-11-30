@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { AuthModal } from '../AuthModal/AuthModal';
 import { useSelector } from 'react-redux';
 import { selectModal, selectUser } from '../../selectors/selectors';
@@ -33,9 +34,9 @@ export const Header: React.FC = () => {
         <div className={styles.content}>
           {isLoggedIn ? (
             <>
-              <button className={styles.newPostButton}>
+              <Link to="/new-post" className={styles.newPostButton}>
                 <p>New post</p> <img src={pencil} alt="pencil" />
-              </button>
+              </Link>
               <button className={styles.actionButton} onClick={logout}>
                 Sign Out
               </button>
