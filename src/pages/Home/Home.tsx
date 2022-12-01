@@ -1,56 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Posts } from '../../components/Posts/Posts';
+import { auth } from '../../firebase';
+import { fetchUserPosts } from '../../redux/actions/post';
+import { useAppDispatch } from '../../redux/store';
+import { selectPost } from '../../selectors/selectors';
 
 import styles from './Home.module.scss';
 
-const data = [
-  {
-    id: '1',
-    imageUrl:
-      'https://images.pexels.com/photos/4050284/pexels-photo-4050284.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    title: 'Test title 1',
-    text: 'test text 1',
-    fullName: 'Test full name',
-    views: 7,
-    datePublished: '30th NOVEMBER 2022',
-  },
-  {
-    id: '2',
-    imageUrl:
-      'https://images.pexels.com/photos/2433985/pexels-photo-2433985.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    title: 'Test title 2',
-    text: 'test text 2',
-    fullName: 'Test full name',
-    views: 25,
-    datePublished: '30th NOVEMBER 2022',
-  },
-  {
-    id: '3',
-    imageUrl:
-      'https://images.pexels.com/photos/3875821/pexels-photo-3875821.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    title: 'Test title 3',
-    text: 'test text 3',
-    fullName: 'Test full name',
-    views: 3,
-    datePublished: '30th NOVEMBER 2022',
-  },
-  {
-    id: '4',
-    imageUrl:
-      'https://images.pexels.com/photos/1292115/pexels-photo-1292115.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    title: 'Test title 4',
-    text: 'test text 4',
-    fullName: 'Test full name',
-    views: 137,
-    datePublished: '30th NOVEMBER 2022',
-  },
-];
-
 export const Home: React.FC = () => {
+  const dispatch = useAppDispatch();
+
+  const { posts } = useSelector(selectPost);
+
+  const currentUser = auth.currentUser?.uid;
+
+  useEffect(() => {
+    dispatch(fetchUserPosts(String(currentUser)));
+  }, []);
+
   return (
     <div className={styles.root}>
       <div className={styles.posts}>
-        {data && data.map((post) => <Posts key={post.id} {...post} />)}
+        {posts && posts.map((post) => <Posts key={post.postId} {...post} />)}
       </div>
     </div>
   );

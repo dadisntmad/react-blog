@@ -1,5 +1,9 @@
 import React from 'react';
 
+import moment from 'moment';
+
+import { DatePublished } from '../../types/post';
+
 import styles from './Posts.module.scss';
 
 type PostsProps = {
@@ -8,7 +12,7 @@ type PostsProps = {
   text: string;
   fullName: string;
   views: number;
-  datePublished: string;
+  datePublished: DatePublished;
 };
 
 export const Posts: React.FC<PostsProps> = ({
@@ -31,7 +35,7 @@ export const Posts: React.FC<PostsProps> = ({
           <p>{fullName}</p>
         </div>
         <div className={styles.date}>
-          <p>{datePublished}</p>
+          <p>{moment(datePublished).format('MMMM Do YYYY')}</p>
           <p className={styles.views}>
             <span>{views}</span>
             <svg

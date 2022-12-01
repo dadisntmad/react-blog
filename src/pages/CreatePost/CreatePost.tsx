@@ -11,6 +11,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { fetchCurrentUser } from '../../redux/actions/user';
 import SimpleMDE from 'react-simplemde-editor';
 import 'easymde/dist/easymde.min.css';
+import { serverTimestamp } from 'firebase/firestore';
 
 import upload from '../../assets/upload.png';
 
@@ -33,7 +34,7 @@ export const CreatePost: React.FC = () => {
 
   const currentUser = auth.currentUser?.uid;
 
-  const isValid = title && text;
+  const isValid = file && title && text;
 
   const postId = uuidv4();
 
@@ -105,12 +106,13 @@ export const CreatePost: React.FC = () => {
   const onCreatePost = async (fileUrl: string) => {
     const data = {
       uid: currentUser,
+      postId,
       imageUrl: fileUrl,
       title,
       text,
       fullName,
       views: 0,
-      datePublished: new Date(),
+      datePublished: serverTimestamp(),
     };
 
     await setDoc(doc(db, 'posts', postId), data);
