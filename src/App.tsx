@@ -9,6 +9,7 @@ import { setIsLoggedIn } from './redux/slices/userSlice';
 import { Header } from './components/Header/Header';
 import { Home } from './pages/Home/Home';
 import { CreatePost } from './pages/CreatePost/CreatePost';
+import { Post } from './pages/Post/Post';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -31,6 +32,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/new-post" element={<CreatePost />} />
+        <Route path="/post/:postId" element={<Post />} />
       </Routes>
     </div>
   );
