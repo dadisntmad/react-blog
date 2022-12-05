@@ -32,6 +32,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/new-post" element={<CreatePost />} />
+        <Route path="/post/:id/edit" element={<CreatePost />} />
         <Route path="/post/:postId" element={<Post />} />
       </Routes>
     </div>

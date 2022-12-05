@@ -1,6 +1,7 @@
 export type PostSliceState = {
   isPostLoading: boolean;
   posts: Post[];
+  isEditingMode: boolean;
 };
 
 export type Post = {

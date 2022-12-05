@@ -4,6 +4,7 @@ import { Post, PostSliceState } from '../../types/post';
 const initialState: PostSliceState = {
   isPostLoading: false,
   posts: [],
+  isEditingMode: false,
 };
 
 const postSlice = createSlice({
@@ -17,9 +18,12 @@ const postSlice = createSlice({
     setIsPostLoading(state) {
       state.isPostLoading = true;
     },
+    setIsEditingMode(state, action: PayloadAction<boolean>) {
+      state.isEditingMode = action.payload;
+    },
   },
 });
 
-export const { setPosts, setIsPostLoading } = postSlice.actions;
+export const { setPosts, setIsPostLoading, setIsEditingMode } = postSlice.actions;
 
 export default postSlice.reducer;

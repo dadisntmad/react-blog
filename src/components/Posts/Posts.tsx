@@ -1,10 +1,13 @@
 import React from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../redux/store';
 import { doc, deleteDoc } from 'firebase/firestore';
 import moment from 'moment';
 
 import { db } from '../../firebase';
+
+import { setIsEditingMode } from '../../redux/slices/postSlice';
 
 import { DatePublished } from '../../types/post';
 
@@ -21,6 +24,7 @@ type PostsProps = {
   fullName: string;
   views: number;
   datePublished: DatePublished;
+  isEditable: boolean;
 };
 
 export const Posts: React.FC<PostsProps> = ({
@@ -31,17 +35,30 @@ export const Posts: React.FC<PostsProps> = ({
   fullName,
   views,
   datePublished,
+  isEditable,
 }) => {
+  const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
+
+  const onEditPost = async () => {
+    dispatch(setIsEditingMode(true));
+
+    navigate(`/post/${postId}/edit`);
+  };
+
   const onDeletePost = async () => {
     await deleteDoc(doc(db, 'posts', postId));
   };
 
   return (
     <div className={styles.post}>
-      <div className={styles.buttons}>
-        <img src={edit} width={20} alt="edit-button" />
-        <img src={deleteIcon} width={20} alt="delete-button" onClick={onDeletePost} />
-      </div>
+      {isEditable && (
+        <div className={styles.buttons}>
+          <img src={edit} width={20} alt="edit-button" onClick={onEditPost} />
+          <img src={deleteIcon} width={20} alt="delete-button" onClick={onDeletePost} />
+        </div>
+      )}
       <Link to={`/post/${postId}`}>
         <div className={styles.image}>
           <img src={imageUrl} alt="user-post" />

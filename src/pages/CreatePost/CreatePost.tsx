@@ -1,10 +1,11 @@
 import React, { useState, useCallback, useMemo, useEffect, useRef } from 'react';
 
 import { useAppDispatch } from '../../redux/store';
+import { setIsEditingMode } from '../../redux/slices/postSlice';
 import { useSelector } from 'react-redux';
-import { selectUser } from '../../selectors/selectors';
-import { Link, useNavigate } from 'react-router-dom';
-import { doc, setDoc } from 'firebase/firestore';
+import { selectPost, selectUser } from '../../selectors/selectors';
+import { useNavigate, useParams } from 'react-router-dom';
+import { doc, setDoc, updateDoc, getDoc } from 'firebase/firestore';
 import { auth, db, storage } from '../../firebase';
 import { v4 as uuidv4 } from 'uuid';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
@@ -21,12 +22,15 @@ export const CreatePost: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const [file, setFile] = useState<File>();
+  const { id } = useParams();
+
+  const [file, setFile] = useState<File | null>(null);
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
   const [selectedImage, setSelectedImage] = useState<File | any>();
 
   const { user } = useSelector(selectUser);
+  const { isEditingMode } = useSelector(selectPost);
 
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -38,7 +42,7 @@ export const CreatePost: React.FC = () => {
 
   const postId = uuidv4();
 
-  const onSelectImage = () => {
+  const onSubmit = () => {
     if (file) {
       const storageRef = ref(storage, `previews/${currentUser}/${Math.random().toString(36)}`);
       const uploadTask = uploadBytesResumable(storageRef, file);
@@ -74,7 +78,7 @@ export const CreatePost: React.FC = () => {
         () => {
           // Upload completed successfully, now we can get the download URL
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            onCreatePost(downloadURL);
+            isEditingMode ? onSaveEditedPost(downloadURL) : onCreatePost(downloadURL);
           });
         },
       );
@@ -122,15 +126,64 @@ export const CreatePost: React.FC = () => {
     setText('');
   };
 
+  const onSaveEditedPost = async (fileUrl: string) => {
+    const docRef = doc(db, 'posts', String(id));
+
+    const data = {
+      imageUrl: fileUrl,
+      title,
+      text,
+    };
+
+    await updateDoc(docRef, data);
+
+    navigate(`/`);
+
+    dispatch(setIsEditingMode(false));
+  };
+
+  const getDocById = async () => {
+    const docRef = doc(db, 'posts', String(id));
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      setFile(docSnap.data().imageUrl);
+      setSelectedImage(docSnap.data().imageUrl);
+      setTitle(docSnap.data().title);
+      setText(docSnap.data().text);
+    } else {
+      console.log('No such document!');
+    }
+  };
+
+  const onDeletePreview = () => {
+    setFile(null);
+    setSelectedImage('');
+  };
+
+  const onCancel = () => {
+    dispatch(setIsEditingMode(false));
+    navigate('/');
+  };
+
   useEffect(() => {
     dispatch(fetchCurrentUser(String(currentUser)));
   }, []);
+
+  useEffect(() => {
+    if (id) {
+      getDocById();
+    }
+  }, [id]);
 
   return (
     <div className={styles.root}>
       <div className={styles.preview}>
         {file ? (
-          <img className={styles.previewImage} src={selectedImage} alt="selected-file" />
+          <div className={styles.previewImageContainer}>
+            <button onClick={onDeletePreview}>Delete preview</button>
+            <img className={styles.previewImage} src={selectedImage} alt="selected-file" />
+          </div>
         ) : (
           <button onClick={() => fileRef.current?.click()}>
             <img src={upload} alt="upload-button" />
@@ -147,10 +200,10 @@ export const CreatePost: React.FC = () => {
       />
       <SimpleMDE value={text} onChange={onTextChange} options={options} />
       <div className={styles.buttons}>
-        <button disabled={!isValid} onClick={onSelectImage}>
-          Post
+        <button disabled={!isValid} onClick={onSubmit}>
+          {isEditingMode ? 'Save' : 'Post'}
         </button>
-        <Link to="/">Cancel</Link>
+        <button onClick={onCancel}>Cancel</button>
       </div>
     </div>
   );
