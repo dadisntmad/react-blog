@@ -1,3 +1,30 @@
+.settings {
+  position: relative;
+  display: flex;
+  align-items: center;
+  max-width: 150px;
+  padding: 14px;
+  cursor: pointer;
+  transition: 0.2s all ease-in-out;
+  border-radius: 8px;
+  margin-bottom: 12px;
+
+  &:hover {
+    background: white;
+  }
+
+  span {
+    margin-right: 12px;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
+}
+
 .posts {
   display: flex;
   flex-wrap: wrap;

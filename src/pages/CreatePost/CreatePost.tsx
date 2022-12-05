@@ -168,7 +168,7 @@ export const CreatePost: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchCurrentUser(String(currentUser)));
-  }, []);
+  }, [currentUser]);
 
   useEffect(() => {
     if (id) {

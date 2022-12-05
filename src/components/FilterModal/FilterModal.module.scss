@@ -1,0 +1,30 @@
+.root {
+  width: 150px;
+  height: 90px;
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: 0.2s all ease-in-out;
+
+  &:hover {
+    background: rgb(240, 240, 240);
+  }
+
+  span {
+    font-weight: 500;
+  }
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
+}

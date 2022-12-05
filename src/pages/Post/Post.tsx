@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { doc, getDoc, updateDoc, increment } from 'firebase/firestore';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { db } from '../../firebase';
 import { Post as PostType } from '../../types/post';
+import moment from 'moment';
 import ReactMarkdown from 'react-markdown';
-
-import back from '../../assets/back.png';
 
 import styles from './Post.module.scss';
 
@@ -42,16 +41,12 @@ export const Post: React.FC = () => {
   }, [postId]);
 
   return (
-    <>
-      <Link className={styles.backButton} to="/">
-        <img src={back} alt="back-button" />
-      </Link>
-      <div className={styles.post} key={post?.postId}>
-        <h1>{post?.title}</h1>
-        <div>
-          <ReactMarkdown children={String(post?.text)} />
-        </div>
+    <div className={styles.post}>
+      <h1>{post?.title}</h1>
+      <p className={styles.date}>{moment(post?.datePublished).format('MMMM Do YYYY')}</p>
+      <div>
+        <ReactMarkdown children={String(post?.text)} />
       </div>
-    </>
+    </div>
   );
 };

@@ -5,6 +5,7 @@ import ContentLoader from 'react-content-loader';
 export const PostsLoader: React.FC = () => {
   return (
     <ContentLoader
+      style={{ margin: '24px' }}
       speed={2}
       width={500}
       height={390}

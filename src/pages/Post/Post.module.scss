@@ -1,9 +1,3 @@
-.backButton {
-  position: absolute;
-  top: 12%;
-  left: 15%;
-}
-
 .post {
   width: 100%;
   min-height: 400px;
@@ -11,7 +5,7 @@
   border-radius: 20px;
   padding: 70px 90px;
   box-shadow: 0 60px 30px hsl(0deg 0% 40% / 5%);
-  margin: 24px 0px;
+  margin: 24px;
 
   h1 {
     font-size: 42px;
@@ -30,4 +24,9 @@
       line-height: 36px;
     }
   }
+}
+
+.date {
+  color: grey;
+  font-weight: 600;
 }
