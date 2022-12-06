@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { PostsLoader } from '../../components/Loaders/PostsLoader/PostsLoader';
 import { Posts } from '../../components/Posts/Posts';
 import { auth } from '../../firebase';
-import { fetchUserPosts } from '../../redux/actions/post';
+import { fetchAllPosts, fetchUserPosts } from '../../redux/actions/post';
 import { setIsPostLoading } from '../../redux/slices/postSlice';
 import { useAppDispatch } from '../../redux/store';
 import { selectPost, selectUser } from '../../selectors/selectors';
@@ -25,11 +25,20 @@ export const Home: React.FC = () => {
 
   useEffect(() => {
     dispatch(setIsPostLoading());
-    dispatch(fetchUserPosts(String(currentUser)));
-  }, [currentUser]);
+
+    if (isLoggedIn) {
+      dispatch(fetchUserPosts(String(currentUser)));
+    } else {
+      dispatch(fetchAllPosts());
+    }
+  }, [currentUser, isLoggedIn]);
 
   const onMakeVisible = () => {
     setIsVisible(!isVisible);
+  };
+
+  const onCloseModal = () => {
+    setIsVisible(false);
   };
 
   return (
@@ -37,7 +46,7 @@ export const Home: React.FC = () => {
       <div className={styles.settings} onClick={onMakeVisible}>
         <span>Filter</span> <img src={filter} alt="filter" />
       </div>
-      {isVisible && <FilterModal />}
+      {isVisible && <FilterModal onCloseModal={onCloseModal} />}
       <div className={styles.posts}>
         {isPostLoading
           ? [...Array(4)].map((_, index) => <PostsLoader key={index} />)
