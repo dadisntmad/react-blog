@@ -1,6 +1,5 @@
 body {
   margin: 0;
-
   background: #f7f8f8;
 }
 
@@ -25,7 +24,11 @@ html {
 
 a {
   text-decoration: none;
-  color: black;
+  color: #138cd3;
+
+  &:hover {
+    border-bottom: 1px solid #138cd3;
+  }
 }
 
 p {

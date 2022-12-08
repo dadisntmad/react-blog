@@ -1,13 +1,14 @@
 import React from 'react';
 
+import { useInView } from 'react-intersection-observer';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/store';
 import { doc, deleteDoc } from 'firebase/firestore';
 import moment from 'moment';
 
-import { db } from '../../firebase';
-
 import { setIsEditingMode } from '../../redux/slices/postSlice';
+
+import { db } from '../../firebase';
 
 import { DatePublished } from '../../types/post';
 
@@ -41,6 +42,11 @@ export const Posts: React.FC<PostsProps> = ({
 
   const navigate = useNavigate();
 
+  const { ref, inView } = useInView({
+    threshold: 0.5,
+    triggerOnce: true,
+  });
+
   const onEditPost = async () => {
     dispatch(setIsEditingMode(true));
 
@@ -52,7 +58,7 @@ export const Posts: React.FC<PostsProps> = ({
   };
 
   return (
-    <div className={styles.post}>
+    <div className={styles.post} ref={ref}>
       {isEditable && (
         <div className={styles.buttons}>
           <img src={edit} width={20} alt="edit-button" onClick={onEditPost} />
@@ -60,9 +66,13 @@ export const Posts: React.FC<PostsProps> = ({
         </div>
       )}
       <Link to={`/post/${postId}`}>
-        <div className={styles.image}>
-          <img src={imageUrl} alt="user-post" />
-        </div>
+        {inView ? (
+          <div className={styles.image}>
+            <img src={imageUrl} alt="user-post" />
+          </div>
+        ) : (
+          <div className={styles.lazy} />
+        )}
       </Link>
       <div className={styles.footer}>
         <h3>{title}</h3>

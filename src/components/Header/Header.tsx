@@ -1,17 +1,20 @@
 import React from 'react';
+
 import { Link } from 'react-router-dom';
-import { AuthModal } from '../AuthModal/AuthModal';
 import { useSelector } from 'react-redux';
-import { selectModal, selectUser } from '../../selectors/selectors';
 import { useAppDispatch } from '../../redux/store';
-import { setIsModalOpened } from '../../redux/slices/modalSlice';
 import { signOut } from 'firebase/auth';
+import { auth } from '../../firebase';
+
+import { setIsModalOpened } from '../../redux/slices/modalSlice';
+
+import { AuthModal } from '../AuthModal/AuthModal';
+
+import { selectModal, selectUser } from '../../selectors/selectors';
 
 import pencil from '../../assets/pencil.png';
-import sun from '../../assets/sun.png';
 
 import styles from './Header.module.scss';
-import { auth } from '../../firebase';
 
 export const Header: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -46,7 +49,6 @@ export const Header: React.FC = () => {
               Sign In
             </button>
           )}
-          <img src={sun} alt="theme-changing-icon" />
         </div>
       </header>
     </>

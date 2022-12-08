@@ -1,8 +1,9 @@
 import React from 'react';
 
 import { useAppDispatch } from '../../redux/store';
-import { fetchAllPosts, fetchUserPosts } from '../../redux/actions/post';
 import { auth } from '../../firebase';
+
+import { fetchAllPosts, fetchUserPosts } from '../../redux/actions/post';
 
 import user from '../../assets/user.png';
 import users from '../../assets/users.png';

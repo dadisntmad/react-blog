@@ -1,13 +1,16 @@
 import React from 'react';
-import { setFormType, setIsModalOpened } from '../../redux/slices/modalSlice';
+
 import { useAppDispatch } from '../../redux/store';
-import { FormType } from '../../types/modal';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { useSelector } from 'react-redux';
-import { selectUser } from '../../selectors/selectors';
 import { auth, db } from '../../firebase';
+
+import { setFormType, setIsModalOpened } from '../../redux/slices/modalSlice';
 import { setEmail, setFullname, setIsLoading, setPassword } from '../../redux/slices/userSlice';
+
+import { FormType } from '../../types/modal';
+import { selectUser } from '../../selectors/selectors';
 
 import styles from './SignUp.module.scss';
 

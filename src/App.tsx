@@ -4,12 +4,11 @@ import { useAppDispatch } from './redux/store';
 import { Routes, Route } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase';
+
 import { setIsLoggedIn } from './redux/slices/userSlice';
 
-import { Header } from './components/Header/Header';
-import { Home } from './pages/Home/Home';
-import { CreatePost } from './pages/CreatePost/CreatePost';
-import { Post } from './pages/Post/Post';
+import { Header } from './components';
+import { Home, CreatePost, Post } from './pages';
 
 function App() {
   const dispatch = useAppDispatch();

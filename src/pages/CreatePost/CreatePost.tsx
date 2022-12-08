@@ -1,21 +1,23 @@
 import React, { useState, useCallback, useMemo, useEffect, useRef } from 'react';
 
-import { useAppDispatch } from '../../redux/store';
-import { setIsEditingMode } from '../../redux/slices/postSlice';
-import { useSelector } from 'react-redux';
-import { selectPost, selectUser } from '../../selectors/selectors';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../../redux/store';
 import { doc, setDoc, updateDoc, getDoc } from 'firebase/firestore';
 import { auth, db, storage } from '../../firebase';
 import { v4 as uuidv4 } from 'uuid';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { fetchCurrentUser } from '../../redux/actions/user';
-import SimpleMDE from 'react-simplemde-editor';
-import 'easymde/dist/easymde.min.css';
 import { serverTimestamp } from 'firebase/firestore';
+import SimpleMDE from 'react-simplemde-editor';
+
+import { fetchCurrentUser } from '../../redux/actions/user';
+import { setIsEditingMode } from '../../redux/slices/postSlice';
+
+import { selectPost, selectUser } from '../../selectors/selectors';
 
 import upload from '../../assets/upload.png';
 
+import 'easymde/dist/easymde.min.css';
 import styles from './CreatePost.module.scss';
 
 export const CreatePost: React.FC = () => {

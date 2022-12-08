@@ -1,12 +1,15 @@
 import React from 'react';
+
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../../redux/store';
+import { auth } from '../../firebase';
+
 import { setFormType, setIsModalOpened } from '../../redux/slices/modalSlice';
 import { setEmail, setIsLoading, setPassword } from '../../redux/slices/userSlice';
-import { useAppDispatch } from '../../redux/store';
+
 import { selectUser } from '../../selectors/selectors';
 import { FormType } from '../../types/modal';
-import { auth } from '../../firebase';
 
 import styles from './SignIn.module.scss';
 

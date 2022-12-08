@@ -1,10 +1,14 @@
 import React, { useEffect } from 'react';
-import { SignIn } from '../../pages/SignIn/SignIn';
-import { SignUp } from '../../pages/SIgnUp/SignUp';
+
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../redux/store';
-import { selectModal } from '../../selectors/selectors';
+
 import { setIsModalOpened } from '../../redux/slices/modalSlice';
+
+import { SignIn, SignUp } from '../../pages';
+
+import { selectModal } from '../../selectors/selectors';
+
 import { FormType } from '../../types/modal';
 
 import close from '../../assets/close.png';

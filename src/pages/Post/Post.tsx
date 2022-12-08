@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+
 import { doc, getDoc, updateDoc, increment } from 'firebase/firestore';
 import { useParams } from 'react-router-dom';
 import { db } from '../../firebase';
-import { Post as PostType } from '../../types/post';
-import moment from 'moment';
 import ReactMarkdown from 'react-markdown';
+import moment from 'moment';
+
+import { Post as PostType } from '../../types/post';
 
 import styles from './Post.module.scss';
 
